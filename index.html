@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="METHOD —— 为创造者而生的数字工作台。把想法、协作与发布，收进同一条流畅的创作动线。" />
+  <meta name="theme-color" content="#05060a" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="METHOD — 让创作成为一种方法" />
+  <meta property="og:description" content="把灵感、协作与发布收进同一条动线。METHOD 是为创造者打造的数字工作台。" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>METHOD — 让创作成为一种方法</title>
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('method-theme');
+        document.documentElement.setAttribute('data-theme', saved || 'dark');
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <noscript>
+    <style>
+      #preloader { display: none !important; }
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c5cff'/%3E%3Cstop offset='1' stop-color='%2300e5c8'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='26' fill='%230b0d16'/%3E%3Cpath d='M24 72V28h11l15 22 15-22h11v44H63V49L50 68 37 49v23z' fill='url(%23g)'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- 载入动画 -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <div class="preloader__logo">M<span>·</span></div>
+      <div class="preloader__bar"><span></span></div>
+      <div class="preloader__hint">正在构建你的工作台…</div>
+    </div>
+  </div>
+
+  <!-- 背景层 -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="aurora" aria-hidden="true">
+    <span class="aurora__blob aurora__blob--1"></span>
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <!-- 进度条 -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- 导航 -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#top" class="brand" aria-label="METHOD 首页">
+        <span class="brand__mark">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 19V5h3.2L12 12.4 16.8 5H20v14h-3.1v-8.6L12 17.2l-4.9-6.8V19H4z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand__name">METHOD</span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="主导航">
+        <a href="#features">能力</a>
+        <a href="#showcase">案例</a>
+        <a href="#process">流程</a>
+        <a href="#pricing">定价</a>
+        <a href="#faq">问答</a>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="icon-btn" id="themeToggle" aria-label="切换主题" title="切换主题">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" stroke-linecap="round"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn kbd-btn" id="paletteBtn" aria-label="打开命令面板" title="命令面板 (⌘K)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+        </button>
+        <a href="app/index.html" class="btn btn--primary btn--sm nav__cta">进入工作台</a>
+        <button class="burger" id="burger" aria-label="打开菜单" aria-expanded="false">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero container">
+      <div class="hero__copy">
+        <div class="pill reveal" data-reveal>
+          <span class="pill__dot"></span>
+          <span>METHOD 2.0 已发布</span>
+          <span class="pill__sep"></span>
+          <span class="pill__muted">全新 AI 协作引擎</span>
+        </div>
+
+        <h1 class="hero__title reveal" data-reveal>
+          <span class="hero__title-line"><span class="hero__title-inner">让创作</span></span>
+          <span class="hero__title-line"><span class="hero__title-inner">成为一种<span class="grad-text">方法</span></span></span>
+        </h1>
+
+        <p class="hero__lede reveal" data-reveal>
+          把灵感、协作与发布收进同一条动线。METHOD 是为创造者打造的数字工作台——
+          更少切换，更多<span class="type-wrap"><span class="typed" id="typed"></span><span class="caret"></span></span>
+        </p>
+
+        <div class="hero__actions reveal" data-reveal>
+          <a href="app/index.html" class="btn btn--primary magnetic" data-magnetic>
+            <span>免费开始创作</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <button class="btn btn--ghost magnetic" data-magnetic id="watchBtn">
+            <span class="play">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+            </span>
+            <span>观看 90 秒演示</span>
+          </button>
+        </div>
+
+        <div class="hero__meta reveal" data-reveal>
+          <div class="avatars">
+            <span style="--i:0">A</span><span style="--i:1">K</span><span style="--i:2">M</span><span style="--i:3">S</span>
+          </div>
+          <div>
+            <div class="stars">★★★★★</div>
+            <p><strong>12,800+</strong> 位创作者正在使用</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__visual reveal" data-reveal>
+        <div class="orb-wrap" id="orbWrap">
+          <div class="orb">
+            <div class="orb__ring orb__ring--1"></div>
+            <div class="orb__ring orb__ring--2"></div>
+            <div class="orb__ring orb__ring--3"></div>
+            <div class="orb__core"></div>
+          </div>
+
+          <div class="float-card float-card--1" data-depth="2">
+            <div class="float-card__top">
+              <span class="dot dot--green"></span>
+              <span>实时协作</span>
+              <span class="float-card__badge">3 人</span>
+            </div>
+            <div class="float-card__lines"><i style="width:82%"></i><i style="width:56%"></i></div>
+          </div>
+
+          <div class="float-card float-card--2" data-depth="3">
+            <div class="float-card__top">
+              <span class="spark">✦</span>
+              <span>AI 生成完成</span>
+            </div>
+            <div class="float-card__chart">
+              <span style="--h:38%"></span><span style="--h:62%"></span><span style="--h:48%"></span>
+              <span style="--h:88%"></span><span style="--h:70%"></span><span style="--h:100%"></span>
+            </div>
+          </div>
+
+          <div class="float-card float-card--3" data-depth="1.5">
+            <div class="float-card__top"><span class="dot dot--violet"></span><span>今日产出</span></div>
+            <div class="float-card__big"><span data-count="24">0</span><small>个版本</small></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero__scroll" aria-hidden="true">
+        <span>向下滚动</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- LOGOS -->
+    <section class="logos container reveal" data-reveal>
+      <p class="logos__label">被这些团队的创造者信赖</p>
+      <div class="logos__track">
+        <div class="logos__row">
+          <span>NEBULA</span><span>ORBIT</span><span>LUMEN</span><span>HYPER</span><span>MONO</span><span>VERTEX</span>
+          <span>NEBULA</span><span>ORBIT</span><span>LUMEN</span><span>HYPER</span><span>MONO</span><span>VERTEX</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 数据 -->
+    <section class="stats container">
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="12800" data-suffix="+">0</span></div>
+        <p>活跃创作者</p>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="96" data-suffix="%">0</span></div>
+        <p>团队效率提升</p>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="4" data-suffix=".9/5">0</span></div>
+        <p>用户满意度评分</p>
+      </div>
+      <div class="stat reveal" data-reveal>
+        <div class="stat__num"><span data-count="120" data-suffix="+">0</span></div>
+        <p>国家与地区</p>
+      </div>
+    </section>
+
+    <!-- 能力 Bento -->
+    <section class="section container" id="features">
+      <div class="section__head reveal" data-reveal>
+        <span class="eyebrow">能力 · CAPABILITIES</span>
+        <h2>一个工作台，<br class="br-mobile" />覆盖创作全流程</h2>
+        <p>从第一笔草图到最后一次发布，METHOD 把碎片化的工具链收敛成一条清晰的路径。</p>
+      </div>
+
+      <div class="bento">
+        <article class="card card--wide reveal" data-reveal data-tilt data-spotlight>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke-linecap="round"/><circle cx="12" cy="12" r="3.4"/></svg>
+          </div>
+          <h3>AI 协作引擎</h3>
+          <p>理解你语境的智能助手，能读项目、懂风格、直接产出可用的初稿，而不是从零开始猜。</p>
+          <div class="mini-chat" aria-hidden="true">
+            <div class="mini-chat__row mini-chat__row--user">帮我起一个极简的首页结构</div>
+            <div class="mini-chat__row mini-chat__row--ai">
+              <span class="mini-chat__avatar">M</span>
+              <span class="mini-chat__typing"><i></i><i></i><i></i></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-reveal data-tilt data-spotlight>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h10" stroke-linecap="round"/><circle cx="19" cy="17" r="2.2"/></svg>
+          </div>
+          <h3>无限画布</h3>
+          <p>思维导图、白板与文档自由嵌套，想法不必被格式驯服。</p>
+          <div class="canvas-demo" aria-hidden="true">
+            <span class="node node--a"></span><span class="node node--b"></span><span class="node node--c"></span>
+            <svg viewBox="0 0 200 100"><path d="M40 50 C 70 20, 90 20, 110 40 S 150 80, 170 55"/></svg>
+          </div>
+        </article>
+
+        <article class="card reveal" data-reveal data-tilt data-spotlight>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="13" rx="2.5"/><path d="M8 21h8M12 17v4" stroke-linecap="round"/></svg>
+          </div>
+          <h3>一键发布</h3>
+          <p>网站、文档、演示稿，同一份内容多端适配，域名与加速开箱即用。</p>
+          <div class="publish-demo" aria-hidden="true">
+            <div class="publish-demo__bar"><i></i><i></i><i></i></div>
+            <div class="publish-demo__body">
+              <span class="publish-demo__url">method.site/your-work</span>
+              <span class="publish-demo__ok">已上线</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-reveal data-tilt data-spotlight>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3l7 4v10l-7 4-7-4V7z"/><path d="M12 12l7-4M12 12v9M12 12L5 8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>版本时光机</h3>
+          <p>每次保存都是一个可回溯的节点。对比、合并、回滚，像浏览历史一样自然。</p>
+          <div class="timeline-demo" aria-hidden="true">
+            <div class="timeline-demo__line"></div>
+            <span class="timeline-demo__dot" style="--d:0s"></span>
+            <span class="timeline-demo__dot" style="--d:.6s"></span>
+            <span class="timeline-demo__dot" style="--d:1.2s"></span>
+            <span class="timeline-demo__dot" style="--d:1.8s"></span>
+            <div class="timeline-demo__labels"><span>v1</span><span>v7</span><span>v12</span><span>now</span></div>
+          </div>
+          <div class="card__glow"></div>
+        </article>
+
+        <article class="card reveal" data-reveal data-tilt data-spotlight>
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="9" r="3.2"/><circle cx="17" cy="15" r="3.2"/><path d="M11.4 11.4l3.2 3.2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>实时协作，没有时差</h3>
+          <p>光标、评论与决策同步发生。异步团队也能感觉像坐在同一张桌子前。</p>
+          <div class="collab-demo" aria-hidden="true">
+            <div class="collab-demo__cursors">
+              <span class="cursor cursor--a">Alex</span>
+              <span class="cursor cursor--b">Mika</span>
+              <span class="cursor cursor--c">Sora</span>
+            </div>
+            <div class="collab-demo__doc"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 案例 -->
+    <section class="section container" id="showcase">
+      <div class="section__head section__head--row reveal" data-reveal>
+        <div>
+          <span class="eyebrow">案例 · SHOWCASE</span>
+          <h2>作品，自己会说话</h2>
+        </div>
+        <a href="#" class="link-arrow">浏览全部案例
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <div class="showcase">
+        <a href="#" class="work work--1 reveal" data-reveal>
+          <div class="work__art">
+            <div class="work__art-inner">
+              <span class="work__glyph">◐</span>
+              <span class="work__ring"></span>
+            </div>
+          </div>
+          <div class="work__meta">
+            <div>
+              <h3>Nebula OS</h3>
+              <p>产品设计 · 品牌系统</p>
+            </div>
+            <span class="work__tag">2026</span>
+          </div>
+        </a>
+
+        <a href="#" class="work work--2 reveal" data-reveal>
+          <div class="work__art">
+            <div class="work__art-inner">
+              <span class="work__glyph">✳</span>
+              <span class="work__lines"></span>
+            </div>
+          </div>
+          <div class="work__meta">
+            <div>
+              <h3>Mono Journal</h3>
+              <p>独立出版 · 数字杂志</p>
+            </div>
+            <span class="work__tag">2026</span>
+          </div>
+        </a>
+
+        <a href="#" class="work work--3 reveal" data-reveal>
+          <div class="work__art">
+            <div class="work__art-inner">
+              <span class="work__glyph">⏣</span>
+              <span class="work__grid"></span>
+            </div>
+          </div>
+          <div class="work__meta">
+            <div>
+              <h3>Vertex Lab</h3>
+              <p>交互实验 · WebGL</p>
+            </div>
+            <span class="work__tag">2025</span>
+          </div>
+        </a>
+
+        <a href="#" class="work work--4 reveal" data-reveal>
+          <div class="work__art">
+            <div class="work__art-inner">
+              <span class="work__glyph">◈</span>
+              <span class="work__sphere"></span>
+            </div>
+          </div>
+          <div class="work__meta">
+            <div>
+              <h3>Hyper Studio</h3>
+              <p>官网重构 · 动效设计</p>
+            </div>
+            <span class="work__tag">2025</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- 流程 -->
+    <section class="section container" id="process">
+      <div class="section__head reveal" data-reveal>
+        <span class="eyebrow">流程 · PROCESS</span>
+        <h2>四步，从想法到上线</h2>
+        <p>没有多余的仪式感。每一步都为下一步服务。</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal" data-reveal>
+          <span class="step__index">01</span>
+          <div class="step__body">
+            <h3>捕捉</h3>
+            <p>随手记下灵感，AI 自动整理成结构化的项目草图。</p>
+          </div>
+        </div>
+        <div class="step reveal" data-reveal>
+          <span class="step__index">02</span>
+          <div class="step__body">
+            <h3>塑造</h3>
+            <p>在无限画布上推演方向，让团队在同一份语境里讨论。</p>
+          </div>
+        </div>
+        <div class="step reveal" data-reveal>
+          <span class="step__index">03</span>
+          <div class="step__body">
+            <h3>打磨</h3>
+            <p>版本对比、评论与自动化检查，把细节交给系统。</p>
+          </div>
+        </div>
+        <div class="step reveal" data-reveal>
+          <span class="step__index">04</span>
+          <div class="step__body">
+            <h3>发布</h3>
+            <p>一键生成多端版本，域名、性能与可访问性全部就绪。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 评价 -->
+    <section class="section section--bleed" id="voices">
+      <div class="container">
+        <div class="section__head reveal" data-reveal>
+          <span class="eyebrow">声音 · VOICES</span>
+          <h2>他们这样描述 METHOD</h2>
+        </div>
+      </div>
+
+      <div class="marquee reveal" data-reveal>
+        <div class="marquee__track">
+          <figure class="quote">
+            <blockquote>“我们取消了四个订阅工具。团队第一次在同一条动线上工作，周会缩短了一半。”</blockquote>
+            <figcaption><span class="quote__avatar">L</span><div><strong>林知夏</strong><small>Nebula 设计负责人</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“AI 不是噱头。它真的读得懂我们的设计系统，产出的初稿八成可以直接用。”</blockquote>
+            <figcaption><span class="quote__avatar">K</span><div><strong>Kai Mori</strong><small>独立产品设计师</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“从写第一行文档到网站上线，只花了一个下午。那种顺滑感很难用语言形容。”</blockquote>
+            <figcaption><span class="quote__avatar">S</span><div><strong>Sora Ito</strong><small>Mono Journal 主编</small></div></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“版本时光机救了我们一次发布会。回滚只用了十秒，客户甚至没察觉。”</blockquote>
+            <figcaption><span class="quote__avatar">M</span><div><strong>马言</strong><small>Hyper Studio 创始人</small></div></figcaption>
+          </figure>
+          <!-- 复制一份实现无缝滚动 -->
+          <figure class="quote" aria-hidden="true">
+            <blockquote>“我们取消了四个订阅工具。团队第一次在同一条动线上工作，周会缩短了一半。”</blockquote>
+            <figcaption><span class="quote__avatar">L</span><div><strong>林知夏</strong><small>Nebula 设计负责人</small></div></figcaption>
+          </figure>
+          <figure class="quote" aria-hidden="true">
+            <blockquote>“AI 不是噱头。它真的读得懂我们的设计系统，产出的初稿八成可以直接用。”</blockquote>
+            <figcaption><span class="quote__avatar">K</span><div><strong>Kai Mori</strong><small>独立产品设计师</small></div></figcaption>
+          </figure>
+          <figure class="quote" aria-hidden="true">
+            <blockquote>“从写第一行文档到网站上线，只花了一个下午。那种顺滑感很难用语言形容。”</blockquote>
+            <figcaption><span class="quote__avatar">S</span><div><strong>Sora Ito</strong><small>Mono Journal 主编</small></div></figcaption>
+          </figure>
+          <figure class="quote" aria-hidden="true">
+            <blockquote>“版本时光机救了我们一次发布会。回滚只用了十秒，客户甚至没察觉。”</blockquote>
+            <figcaption><span class="quote__avatar">M</span><div><strong>马言</strong><small>Hyper Studio 创始人</small></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 定价 -->
+    <section class="section container" id="pricing">
+      <div class="section__head reveal" data-reveal>
+        <span class="eyebrow">定价 · PRICING</span>
+        <h2>简单透明的价格</h2>
+        <p>随时升级或取消。所有方案都包含无限项目。</p>
+      </div>
+
+      <div class="billing reveal" data-reveal>
+        <span class="billing__label is-active" data-billing="monthly">按月</span>
+        <button class="switch" id="billingSwitch" role="switch" aria-checked="false" aria-label="切换年付">
+          <span class="switch__knob"></span>
+        </button>
+        <span class="billing__label" data-billing="yearly">按年 <em>省 20%</em></span>
+      </div>
+
+      <div class="plans">
+        <article class="plan reveal" data-reveal>
+          <header>
+            <h3>个人</h3>
+            <p>给独立创作者的第一块画布</p>
+          </header>
+          <div class="plan__price">
+            <span class="currency">¥</span>
+            <span class="amount" data-monthly="0" data-yearly="0">0</span>
+            <span class="period">/ 永久</span>
+          </div>
+          <ul class="plan__list">
+            <li>无限个人项目</li>
+            <li>基础 AI 助手（每月 50 次）</li>
+            <li>1 个自定义域名</li>
+            <li>社区支持</li>
+          </ul>
+          <a href="app/index.html" class="btn btn--ghost btn--block">免费开始</a>
+        </article>
+
+        <article class="plan plan--featured reveal" data-reveal>
+          <span class="plan__badge">最受欢迎</span>
+          <header>
+            <h3>专业</h3>
+            <p>给需要速度与品质的小团队</p>
+          </header>
+          <div class="plan__price">
+            <span class="currency">¥</span>
+            <span class="amount" data-monthly="129" data-yearly="103">129</span>
+            <span class="period">/ 月 · 每位成员</span>
+          </div>
+          <ul class="plan__list">
+            <li>包含个人版全部能力</li>
+            <li>无限 AI 协作与生成</li>
+            <li>实时多人协作与评论</li>
+            <li>版本时光机 · 无限历史</li>
+            <li>优先邮件支持</li>
+          </ul>
+          <a href="app/index.html" class="btn btn--primary btn--block magnetic" data-magnetic>开始 14 天试用</a>
+          <p class="plan__note">无需信用卡</p>
+        </article>
+
+        <article class="plan reveal" data-reveal>
+          <header>
+            <h3>团队</h3>
+            <p>给规模化协作的组织</p>
+          </header>
+          <div class="plan__price">
+            <span class="currency">¥</span>
+            <span class="amount" data-monthly="299" data-yearly="239">299</span>
+            <span class="period">/ 月 · 每位成员</span>
+          </div>
+          <ul class="plan__list">
+            <li>包含专业版全部能力</li>
+            <li>SSO 与精细化权限</li>
+            <li>品牌资产与设计系统托管</li>
+            <li>专属成功经理</li>
+            <li>99.9% SLA 保障</li>
+          </ul>
+          <a href="#" class="btn btn--ghost btn--block">联系销售</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section container" id="faq">
+      <div class="faq-layout">
+        <div class="section__head section__head--left reveal" data-reveal>
+          <span class="eyebrow">问答 · FAQ</span>
+          <h2>你可能想知道</h2>
+          <p>没找到答案？<a href="#" class="link-underline">和我们聊聊</a>。</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq reveal" data-reveal open>
+            <summary>METHOD 和其他一体化工具的区别是什么？</summary>
+            <div class="faq__body"><p>我们不追求做“全能”，而是做“连贯”。每个模块都为下一位参与者准备好上下文，所以你不会在工具之间搬运信息。AI 也因此能真正理解你的项目，而不是面对一堆孤立的文件。</p></div>
+          </details>
+          <details class="faq reveal" data-reveal>
+            <summary>我的数据和作品安全吗？</summary>
+            <div class="faq__body"><p>所有内容默认私有，传输与存储全程加密。你可以选择数据驻留区域，团队版支持审计日志与自建密钥。我们不会用你的内容训练模型。</p></div>
+          </details>
+          <details class="faq reveal" data-reveal>
+            <summary>可以从现有工具迁移吗？</summary>
+            <div class="faq__body"><p>支持从 Notion、Figma、Google Docs 与 Markdown 批量导入，保留层级与媒体资源。迁移助手会给出映射建议，通常几分钟完成。</p></div>
+          </details>
+          <details class="faq reveal" data-reveal>
+            <summary>离线时还能使用吗？</summary>
+            <div class="faq__body"><p>桌面端支持完整离线编辑，重新联网后自动合并。冲突会以可视化方式呈现，由你决定保留哪个版本。</p></div>
+          </details>
+          <details class="faq reveal" data-reveal>
+            <summary>如何取消订阅？</summary>
+            <div class="faq__body"><p>在设置中一键取消，无需联系客服。已付费周期内继续可用，结束后自动降级到个人版，内容不会被删除。</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section container">
+      <div class="cta reveal" data-reveal>
+        <div class="cta__glow" aria-hidden="true"></div>
+        <span class="eyebrow">准备好了吗</span>
+        <h2>今天，就把想法变成作品</h2>
+        <p>免费开始，不需要信用卡。你只需要一个想做的念头。</p>
+        <div class="cta__actions">
+          <a href="app/index.html" class="btn btn--primary btn--lg magnetic" data-magnetic>免费创建账号</a>
+          <a href="#features" class="btn btn--ghost btn--lg">再看看能力</a>
+        </div>
+        <p class="cta__fine">已有账号？<a href="app/index.html" class="link-underline">直接进入工作台</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <a href="#top" class="brand">
+            <span class="brand__mark">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 19V5h3.2L12 12.4 16.8 5H20v14h-3.1v-8.6L12 17.2l-4.9-6.8V19H4z" fill="currentColor"/></svg>
+            </span>
+            <span class="brand__name">METHOD</span>
+          </a>
+          <p>让创作成为一种方法。<br />为认真做事的人而造。</p>
+        </div>
+        <div class="footer__cols">
+          <div><h4>产品</h4><a href="#features">能力</a><a href="#pricing">定价</a><a href="#showcase">案例</a><a href="#">更新日志</a></div>
+          <div><h4>资源</h4><a href="#">文档</a><a href="#">指南</a><a href="#">社区</a><a href="#">状态</a></div>
+          <div><h4>公司</h4><a href="#">关于</a><a href="#">招聘</a><a href="#">隐私</a><a href="#">条款</a></div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 METHOD Studio. 保留所有权利。</p>
+        <div class="footer__social">
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 3h3.2l-7 8 8.2 10h-6.4l-5-6.1L4.7 21H1.5l7.5-8.6L1.2 3h6.6l4.5 5.6L17.5 3zm-1.1 16h1.8L6.7 4.8H4.8L16.4 19z"/></svg></a>
+          <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.6.4-1.1.6-1.4-2.2-.2-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.2-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.8-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
+          <a href="#" aria-label="Dribbble"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M5 7c4 4 9 5 14 3M3.5 13.5c5-1.5 10 .5 12.5 6M9 3.5c4 4.5 6 10 6.5 16.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__word" aria-hidden="true">METHOD</div>
+  </footer>
+
+  <!-- 回到顶部 -->
+  <button class="to-top" id="toTop" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M6 11l6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- 命令面板 -->
+  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="命令面板" aria-hidden="true">
+    <div class="palette__backdrop" data-close-palette></div>
+    <div class="palette__panel">
+      <div class="palette__search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+        <input type="text" id="paletteInput" placeholder="搜索页面或命令…" aria-label="搜索页面或命令" autocomplete="off" spellcheck="false" />
+        <kbd>ESC</kbd>
+      </div>
+      <div class="palette__list" id="paletteList"></div>
+      <div class="palette__foot"><span><kbd>↑</kbd><kbd>↓</kbd> 选择</span><span><kbd>↵</kbd> 打开</span><span><kbd>⌘</kbd><kbd>K</kbd> 随时呼出</span></div>
+    </div>
+  </div>
+
+  <!-- 演示弹窗 -->
+  <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="产品演示" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__panel">
+      <button class="modal__close" data-close-modal aria-label="关闭">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal__stage">
+        <div class="modal__stage-glow"></div>
+        <div class="modal__play">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </div>
+        <p>90 秒，看见 METHOD 的工作方式</p>
+        <span>演示视频占位 · 替换为你的视频源即可</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
